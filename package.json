@@ -10,6 +10,12 @@
 		"packages/coding-agent/examples/extensions/custom-provider-gitlab-duo",
 		"packages/coding-agent/examples/extensions/custom-provider-qwen-cli"
 	],
+	"exports": {
+		"@mariozechner/pi-ai": "./packages/ai/src/index.ts",
+		"@mariozechner/pi-agent-core": "./packages/agent/src/index.ts",
+		"@mariozechner/pi-coding-agent": "./packages/coding-agent/src/index.ts",
+		"@mariozechner/pi-tui": "./packages/tui/src/index.ts"
+	},
 	"scripts": {
 		"clean": "npm run clean --workspaces",
 		"build": "cd packages/tui && npm run build && cd ../ai && npm run build && cd ../agent && npm run build && cd ../coding-agent && npm run build && cd ../mom && npm run build && cd ../web-ui && npm run build && cd ../pods && npm run build",
