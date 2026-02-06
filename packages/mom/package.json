@@ -15,7 +15,7 @@
 	"scripts": {
 		"clean": "rm -rf dist",
 		"build": "tsgo -p tsconfig.build.json && chmod +x dist/main.js",
-		"dev": "tsgo -p tsconfig.build.json --watch --preserveWatchOutput",
+		"dev": "tsgo -p tsconfig.build.json --watch --preserveWatchOutput"
 	},
 	"dependencies": {
 		"@anthropic-ai/sandbox-runtime": "^0.0.16",

@@ -18,7 +18,7 @@
 		"build": "npm run generate-models && tsgo -p tsconfig.build.json",
 		"dev": "tsgo -p tsconfig.build.json --watch --preserveWatchOutput",
 		"dev:tsc": "tsgo -p tsconfig.build.json --watch --preserveWatchOutput",
-		"test": "vitest --run",
+		"test": "vitest --run"
 	},
 	"dependencies": {
 		"@anthropic-ai/sdk": "^0.73.0",
