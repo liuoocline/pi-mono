@@ -1,10 +1,10 @@
 node_modules/
-dist/
+# dist/  # 临时允许提交 dist 文件以避免 WSL Ubuntu 构建错误
 *.log
 .DS_Store
 *.tsbuildinfo
 # packages/*/node_modules/
-packages/*/dist/
+# packages/*/dist/  # 临时允许提交 dist 文件以避免 WSL Ubuntu 构建错误
 packages/*/dist-chrome/
 packages/*/dist-firefox/
 
