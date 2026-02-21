@@ -250,9 +250,3 @@ git commit -m "fix: message" --no-verify
 4. **修改配置后必须重启 Gateway**
 5. **实际运行目录是 `~/openclaw-new`** — 不是 `~/openclaw`
 6. **NVIDIA API Key 不要提交到 Git** — 只在运行环境的 `~/.openclaw/openclaw.json` 中配置
-
-cd ~/openclaw-new
-tar -xzf /mnt/d/Cursor-AI/openclaw-full-20260220-215544.tar.gz
-pnpm install
-pkill -9 -f openclaw-gateway || true
-nohup node dist/cli/daemon-cli.js gateway run --bind loopback --port 18789 --force > /tmp/openclaw-gateway.log 2>&1 &
