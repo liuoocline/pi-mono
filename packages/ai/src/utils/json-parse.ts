@@ -1,3 +1,4 @@
+import { jsonrepair } from "jsonrepair";
 import { parse as partialParse } from "partial-json";
 
 /**
@@ -68,23 +69,39 @@ export function parseStreamingJson<T = any>(partialJson: string | undefined): T 
 
       return result;
     } catch {
-      // Log parse errors for debugging
-      const errorMsg = firstError instanceof Error ? firstError.message : String(firstError);
-      if (errorMsg.includes("JSON") || errorMsg.includes("position")) {
-        console.warn(
-          "[parseStreamingJson] JSON parse failed after fix attempt",
-          `\nError: ${errorMsg}`,
-          `\nJSON (first 200 chars): ${partialJson.slice(0, 200)}`,
-        );
-      }
-
-      // Try partial-json for incomplete JSON
+      // Try jsonrepair for more comprehensive fixes
       try {
-        const result = partialParse(partialJson);
-        return (result ?? {}) as T;
+        const repaired = jsonrepair(partialJson);
+        const result = JSON.parse(repaired) as T;
+
+        if (repaired !== partialJson) {
+          console.warn(
+            "[parseStreamingJson] jsonrepair fixed malformed JSON",
+            `\nOriginal (first 200 chars): ${partialJson.slice(0, 200)}`,
+            `\nRepaired (first 200 chars): ${repaired.slice(0, 200)}`,
+          );
+        }
+
+        return result;
       } catch {
-        // If all parsing fails, return empty object
-        return {} as T;
+        // Log parse errors for debugging
+        const errorMsg = firstError instanceof Error ? firstError.message : String(firstError);
+        if (errorMsg.includes("JSON") || errorMsg.includes("position")) {
+          console.warn(
+            "[parseStreamingJson] JSON parse failed after all repair attempts",
+            `\nError: ${errorMsg}`,
+            `\nJSON (first 200 chars): ${partialJson.slice(0, 200)}`,
+          );
+        }
+
+        // Try partial-json for incomplete JSON (streaming)
+        try {
+          const result = partialParse(partialJson);
+          return (result ?? {}) as T;
+        } catch {
+          // If all parsing fails, return empty object
+          return {} as T;
+        }
       }
     }
   }
